@@ -29,7 +29,7 @@ suite("Unit Tests", () => {
     const locale = "american-to-british";
     assert.equal(
       translator.translate(input, locale),
-      'We had a party at my friend\'s <span class="highlight">flat</span>',
+      'We had a party at my friend\'s <span class="highlight">flat</span>.',
     );
   });
 

@@ -3,6 +3,14 @@ const americanToBritishSpelling = require("./american-to-british-spelling.js");
 const americanToBritishTitles = require("./american-to-british-titles.js");
 const britishOnly = require("./british-only.js");
 
+const britishToAmericanSpelling = Object.entries(americanToBritishSpelling).map(
+  ([key, value]) => ({ [value]: key }),
+);
+
+const britishToAmericanTitles = Object.entries(americanToBritishTitles).map(
+  ([key, value]) => ({ [value]: key }),
+);
+
 class Translator {
   translate(text, locale) {
     if (locale === "american-to-british") {
@@ -12,9 +20,48 @@ class Translator {
     }
   }
 
-  britishToAmerican(text) {}
+  americanToBritish(text) {
+    let translatedText = text;
 
-  americanToBritish(text) {}
+    translatedText = this.searchAndReplace(
+      translatedText,
+      americanToBritishSpelling,
+    );
+
+    translatedText = this.searchAndReplace(translatedText, americanOnly);
+
+    return translatedText;
+  }
+
+  britishToAmerican(text) {
+    let translatedText = text;
+
+    translatedText = this.searchAndReplace(
+      translatedText,
+      britishToAmericanSpelling,
+    );
+
+    translatedText = this.searchAndReplace(translatedText, britishOnly);
+
+    return translatedText;
+  }
+
+  searchAndReplace(text, dictionary) {
+    let replacedText = text;
+
+    for (const key in dictionary) {
+      const value = dictionary[key];
+
+      if (text.includes(key)) {
+        replacedText = replacedText.replaceAll(
+          key,
+          `<span class="highlight">${value}</span>`,
+        );
+      }
+    }
+
+    return replacedText;
+  }
 }
 
 module.exports = Translator;
