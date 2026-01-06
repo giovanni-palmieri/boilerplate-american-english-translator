@@ -5,8 +5,16 @@ const britishOnly = require("./british-only.js");
 
 class Translator {
   translate(text, locale) {
-    return text;
+    if (locale === "american-to-british") {
+      return this.americanToBritish(text);
+    } else if (locale === "british-to-american") {
+      return this.britishToAmerican(text);
+    }
   }
+
+  britishToAmerican(text) {}
+
+  americanToBritish(text) {}
 }
 
 module.exports = Translator;
