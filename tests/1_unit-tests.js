@@ -186,4 +186,41 @@ suite("Unit Tests", () => {
       'Tea time is usually around 4 or <span class="highlight">4:30</span>.',
     );
   });
+
+  //highlight
+  test("Highlight translation in Mangoes are my favorite fruit.", () => {
+    const input = "Mangoes are my favorite fruit.";
+    const locale = "american-to-british";
+    assert.equal(
+      translator.translate(input, locale),
+      'Mangoes are my <span class="highlight">favourite</span> fruit.',
+    );
+  });
+
+  test("Highlight translation in I ate yogurt for breakfast.", () => {
+    const input = "I ate yogurt for breakfast.";
+    const locale = "american-to-british";
+    assert.equal(
+      translator.translate(input, locale),
+      'I ate <span class="highlight">yoghurt</span> for breakfast.',
+    );
+  });
+
+  test("Highlight translation in We watched the footie match for a while.", () => {
+    const input = "We watched the footie match for a while.";
+    const locale = "british-to-american";
+    assert.equal(
+      translator.translate(input, locale),
+      'We watched the <span class="highlight">soccer</span> match for a while.',
+    );
+  });
+
+  test("Highlight translation in Paracetamol takes up to an hour to work.", () => {
+    const input = "Paracetamol takes up to an hour to work.";
+    const locale = "british-to-american";
+    assert.equal(
+      translator.translate(input, locale),
+      '<span class="highlight">Tylenol</span> takes up to an hour to work.',
+    );
+  });
 });
