@@ -51,11 +51,13 @@ class Translator {
 
     for (const key in dictionary) {
       const value = dictionary[key];
-      const regex = new RegExp(`(\\s|\\.)${key}(\\s|\\.)`);
+      const regex = new RegExp(`(\\s|\\.)(${key})(\\s|\\.)`, "i");
 
       if (regex.test(replacedText)) {
+        const result = regex.exec(replacedText);
+
         replacedText = replacedText.replaceAll(
-          key,
+          result[2],
           `<span class="highlight">${value}</span>`,
         );
       }
