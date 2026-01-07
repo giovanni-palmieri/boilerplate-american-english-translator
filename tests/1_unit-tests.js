@@ -92,7 +92,7 @@ suite("Unit Tests", () => {
     const locale = "american-to-british";
     assert.equal(
       translator.translate(input, locale),
-      'Lunch is at <span class="highlight">12:15</span> today.',
+      'Lunch is at <span class="highlight">12.15</span> today.',
     );
   });
 

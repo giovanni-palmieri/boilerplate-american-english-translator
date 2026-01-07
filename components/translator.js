@@ -12,8 +12,6 @@ const britishToAmericanTitles = Object.entries(americanToBritishTitles).reduce(
   {},
 );
 
-console.log(britishToAmericanSpelling);
-
 class Translator {
   translate(text, locale) {
     if (locale === "american-to-british") {
@@ -33,6 +31,13 @@ class Translator {
 
     translatedText = this.searchAndReplace(translatedText, americanOnly);
 
+    translatedText = this.searchAndReplace(
+      translatedText,
+      americanToBritishTitles,
+    );
+
+    translatedText = this.searchAndReplaceTime(translatedText, ":", ".");
+
     return translatedText;
   }
 
@@ -45,6 +50,13 @@ class Translator {
     );
 
     translatedText = this.searchAndReplace(translatedText, britishOnly);
+
+    translatedText = this.searchAndReplace(
+      translatedText,
+      britishToAmericanTitles,
+    );
+
+    translatedText = this.searchAndReplaceTime(translatedText, "\.", ":");
 
     return translatedText;
   }
@@ -64,6 +76,22 @@ class Translator {
           `<span class="highlight">${value}</span>`,
         );
       }
+    }
+
+    return replacedText;
+  }
+
+  searchAndReplaceTime(text, separator, replaceSeparator) {
+    let replacedText = text;
+    const regex = new RegExp(`(([0-9]?[0-9])${separator}([0-9]?[0-9]))`);
+
+    if (regex.test(replacedText)) {
+      const result = regex.exec(replacedText);
+
+      replacedText = replacedText.replaceAll(
+        result[1],
+        `<span class="highlight">${result[2]}${replaceSeparator}${result[3]}</span>`,
+      );
     }
 
     return replacedText;
