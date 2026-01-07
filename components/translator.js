@@ -3,13 +3,16 @@ const americanToBritishSpelling = require("./american-to-british-spelling.js");
 const americanToBritishTitles = require("./american-to-british-titles.js");
 const britishOnly = require("./british-only.js");
 
-const britishToAmericanSpelling = Object.entries(americanToBritishSpelling).map(
-  ([key, value]) => ({ [value]: key }),
+const britishToAmericanSpelling = Object.entries(
+  americanToBritishSpelling,
+).reduce((acc, [key, value]) => ((acc[value] = key), acc), {});
+
+const britishToAmericanTitles = Object.entries(americanToBritishTitles).reduce(
+  (acc, [key, value]) => ((acc[value] = key), acc),
+  {},
 );
 
-const britishToAmericanTitles = Object.entries(americanToBritishTitles).map(
-  ([key, value]) => ({ [value]: key }),
-);
+console.log(britishToAmericanSpelling);
 
 class Translator {
   translate(text, locale) {
@@ -51,7 +54,7 @@ class Translator {
 
     for (const key in dictionary) {
       const value = dictionary[key];
-      const regex = new RegExp(`(\\s|\\.)(${key})(\\s|\\.)`, "i");
+      const regex = new RegExp(`(\\s|\\.|^)(${key})(\\s|\\.|$)`, "i");
 
       if (regex.test(replacedText)) {
         const result = regex.exec(replacedText);
