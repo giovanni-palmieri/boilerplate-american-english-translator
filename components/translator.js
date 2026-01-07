@@ -51,8 +51,9 @@ class Translator {
 
     for (const key in dictionary) {
       const value = dictionary[key];
+      const regex = new RegExp(`(\\s|\\.)${key}(\\s|\\.)`);
 
-      if (text.includes(key)) {
+      if (regex.test(replacedText)) {
         replacedText = replacedText.replaceAll(
           key,
           `<span class="highlight">${value}</span>`,
